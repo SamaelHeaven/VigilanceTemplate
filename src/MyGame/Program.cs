@@ -6,7 +6,7 @@ var config = new GameConfig
 {
     Title = "My Game",
     ExitKey = Key.Escape,
-    FullscreenKey = Key.Tab,
+    FullscreenKey = Key.Tab
 };
 
 var scene = new Scene();
