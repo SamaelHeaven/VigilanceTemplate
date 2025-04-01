@@ -31,8 +31,8 @@
                 <PackageReference Include="Microsoft.DotNet.ILCompiler.LLVM" Version="10.0.0-*"/>
                 <PackageReference Include="runtime.$(NETCoreSdkPortableRuntimeIdentifier).Microsoft.DotNet.ILCompiler.LLVM" Version="10.0.0-*"/>
                 <DirectPInvoke Include="box2d"/>
-                <DirectPInvoke Include="freetype"/>
                 <DirectPInvoke Include="flecs"/>
+                <DirectPInvoke Include="freetype"/>
                 <DirectPInvoke Include="raylib"/>
                 <NativeLibrary Include="$(Box2dPath)"/>
                 <NativeLibrary Include="$(FlecsPath)"/>
