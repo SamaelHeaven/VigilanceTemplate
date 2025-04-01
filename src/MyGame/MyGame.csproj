@@ -3,14 +3,50 @@
     <PropertyGroup>
         <OutputType Condition="'$(Configuration)' == 'Debug'">Exe</OutputType>
         <OutputType Condition="'$(Configuration)' == 'Release'">WinExe</OutputType>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
+        <ApplicationIcon>..\..\icon.ico</ApplicationIcon>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <PublishAot>true</PublishAot>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <PublishTrimmed>true</PublishTrimmed>
+        <SelfContained>true</SelfContained>
+        <MSBuildEnableWorkloadResolver>false</MSBuildEnableWorkloadResolver>
+        <WasmEnableExceptionHandling>false</WasmEnableExceptionHandling>
+        <DebugType Condition="'$(Configuration)' == 'Release'">none</DebugType>
+        <WasmHtmlTemplate Condition="'$(Configuration)' == 'Release'">..\..\index.html</WasmHtmlTemplate>
     </PropertyGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Resources\**\*"/>
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Vigilance" Version="*"/>
     </ItemGroup>
+
+    <Choose>
+        <When Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
+            <ItemGroup>
+                <PackageReference Include="Microsoft.DotNet.ILCompiler.LLVM" Version="10.0.0-*"/>
+                <PackageReference Include="runtime.$(NETCoreSdkPortableRuntimeIdentifier).Microsoft.DotNet.ILCompiler.LLVM" Version="10.0.0-*"/>
+                <DirectPInvoke Include="box2d"/>
+                <DirectPInvoke Include="freetype"/>
+                <DirectPInvoke Include="flecs"/>
+                <DirectPInvoke Include="raylib"/>
+                <NativeLibrary Include="$(Box2dPath)"/>
+                <NativeLibrary Include="$(FlecsPath)"/>
+                <NativeLibrary Include="$(FreetypePath)"/>
+                <NativeLibrary Include="$(RaylibPath)"/>
+                <LinkerArg Condition="'$(Configuration)' == 'Debug'" Include="-sUSE_GLFW=3 -02 -sASYNCIFY=1"/>
+                <LinkerArg Condition="'$(Configuration)' == 'Release'" Include="-sUSE_GLFW=3 -03 -sASYNCIFY=1"/>
+            </ItemGroup>
+        </When>
+        <Otherwise>
+            <PropertyGroup>
+                <PublishAot>true</PublishAot>
+            </PropertyGroup>
+        </Otherwise>
+    </Choose>
 
 </Project>

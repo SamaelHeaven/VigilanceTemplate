@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+        }
+
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" tabindex="-1"></canvas>
+<script type="text/javascript">
+    var Module = {
+        canvas: (() => {
+            var canvas = document.getElementById("canvas");
+            canvas.oncontextmenu = () => false;
+            canvas.addEventListener("webglcontextlost", (e) => {
+                alert("WebGL context lost. You will need to reload the page.");
+                e.preventDefault();
+            }, false);
+            return canvas;
+        })()
+    }
+</script>
+{{{ SCRIPT }}}
+</body>
+</html>
